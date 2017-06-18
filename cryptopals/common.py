@@ -1,13 +1,15 @@
 import codecs
+import itertools
+import logging
 import pkg_resources
 
 
-def hex_to_base64(hex_string):
-    utf_bytes = codecs.decode(hex_string, 'hex')
-    base64_bytes = codecs.encode(utf_bytes, 'base64')
-    base64_string = codecs.decode(base64_bytes, 'utf').strip()
+def base64_from_hex(message):
+    message = codecs.decode(message, 'hex')
+    message = codecs.encode(message, 'base64')
+    message = codecs.decode(message, 'utf').strip()
 
-    return base64_string
+    return message
 
 
 def get_word_list():
@@ -17,12 +19,33 @@ def get_word_list():
     return word_list
 
 
-def score(input_string):
-    words = input_string.lower().split(' ')
+def hex_from_repeated_xor(key, message):
+    result = perform_repeated_xor(key, message)
+    result = codecs.encode(result, 'hex')
+    result = codecs.decode(result, 'utf')
+
+    return result
+
+
+def perform_repeated_xor(key, message):
+    zipped_bytes = zip(itertools.cycle(key), message)
+    result = bytes([first_byte ^ second_byte for first_byte, second_byte in zipped_bytes])
+
+    return result
+
+
+def score_message(message):
+    words = message.lower().split(' ')
     word_list = get_word_list()
+    score = sum([1 if word in word_list else 0 for word in words])
 
-    return sum([1 if word in word_list else 0 for word in words])
+    logging.debug(f'Score: {score}, Message: {words}')
+
+    return score
 
 
-def xor_using_character(character_byte, input_bytes):
-    return bytes([character_byte ^ input_byte for input_byte in input_bytes])
+def utf_from_repeated_xor(key, message):
+    result = perform_repeated_xor(key, message)
+    result = codecs.decode(result, 'utf')
+
+    return result
