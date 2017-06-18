@@ -1,5 +1,6 @@
-import cryptopals.common as common
 import unittest
+
+import cryptopals.common as common
 
 
 class Tests(unittest.TestCase):

@@ -1,6 +1,6 @@
 import codecs
-import itertools
 import functools
+import itertools
 
 import pkg_resources
 

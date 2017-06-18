@@ -1,5 +1,6 @@
-import cryptopals.challenge_2 as challenge
 import unittest
+
+import cryptopals.challenge_2 as challenge
 
 
 class Tests(unittest.TestCase):

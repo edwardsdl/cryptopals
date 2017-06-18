@@ -1,4 +1,5 @@
 import codecs
+
 import cryptopals.common as common
 
 
