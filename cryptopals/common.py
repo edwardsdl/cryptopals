@@ -1,6 +1,7 @@
 import codecs
 import itertools
-import logging
+import functools
+
 import pkg_resources
 
 
@@ -12,6 +13,7 @@ def base64_from_hex(message):
     return message
 
 
+@functools.lru_cache()
 def get_word_list():
     word_list = pkg_resources.resource_string('cryptopals.resources', 'word_list.txt')
     word_list = codecs.decode(word_list, 'utf').split('\n')
@@ -35,17 +37,18 @@ def perform_repeated_xor(key, message):
 
 
 def score_message(message):
+    if not message.strip().isprintable():
+        return 0
+
     words = message.lower().split(' ')
     word_list = get_word_list()
     score = sum([1 if word in word_list else 0 for word in words])
-
-    logging.debug(f'Score: {score}, Message: {words}')
 
     return score
 
 
 def utf_from_repeated_xor(key, message):
     result = perform_repeated_xor(key, message)
-    result = codecs.decode(result, 'utf')
+    result = codecs.decode(result, 'utf', errors='ignore')
 
     return result
