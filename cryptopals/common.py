@@ -1,5 +1,5 @@
 import codecs
-import os
+import pkg_resources
 
 
 def hex_to_base64(hex_string):
@@ -11,9 +11,8 @@ def hex_to_base64(hex_string):
 
 
 def get_word_list():
-    file = open(f'{os.path.dirname(__file__)}/word_list.txt')
-    word_list = [line.strip() for line in file]
-    file.close()
+    word_list = pkg_resources.resource_string('cryptopals.resources', 'word_list.txt')
+    word_list = codecs.decode(word_list, 'utf').split('\n')
 
     return word_list
 
