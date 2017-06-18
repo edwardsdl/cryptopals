@@ -9,17 +9,17 @@ class Tests(unittest.TestCase):
 
         self.assertEqual(expected_output, actual_output)
 
-    def test_get_word_list(self):
+    def test_word_list_contains_1000_entries(self):
         word_list = common.get_word_list()
-        expected_output = 10000
+        expected_output = 1000
         actual_output = len(word_list)
 
         self.assertEqual(expected_output, actual_output)
 
     def test_score_message(self):
         rows = [
-            ('Now is the time for all good men to come to the aid of their country', 16),
-            ('The quick brown fox jumps over the lazy dog', 8),
+            ('Now is the time for all good men to come to the aid of their country', 13),
+            ('The quick brown fox jumps over the lazy dog', 4),
             ('ETAOIN SHRDLU', 0),
         ]
 
