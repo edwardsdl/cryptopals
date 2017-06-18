@@ -4,11 +4,18 @@ import string
 import cryptopals.common as common
 
 
-def decrypt_xor_cipher(encrypted_message):
+def decrypt_xor_encrypted_message(encrypted_message):
     characters = [[ord(character)] for character in string.ascii_letters + string.digits]
     encrypted_message = codecs.decode(encrypted_message, 'hex')
-    messages = [common.utf_from_repeated_xor(character, encrypted_message) for character in characters]
-    scores = [common.score_message(message) for message in messages]
-    results = list(zip(scores, messages))
 
-    return max(results, key=lambda result: result[0])[1]
+    highest_score = 0
+    highest_scoring_message = ''
+    for character in characters:
+        message = common.utf_from_repeated_xor(character, encrypted_message)
+        score = common.score_message(message)
+
+        if score > highest_score:
+            highest_score = score
+            highest_scoring_message = message
+
+    return highest_scoring_message
