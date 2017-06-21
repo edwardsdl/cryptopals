@@ -13,6 +13,14 @@ def base64_from_hex(message):
     return message
 
 
+def compute_hamming_distance(first_bytes, second_bytes):
+    zipped_bytes = zip(first_bytes, second_bytes)
+    hamming_distance_per_byte = [bin(first_byte ^ second_byte).count('1') for first_byte, second_byte in zipped_bytes]
+    hamming_distance = sum(hamming_distance_per_byte)
+
+    return hamming_distance
+
+
 @functools.lru_cache()
 def get_word_list():
     word_list = pkg_resources.resource_string('cryptopals.resources', 'word_list.txt')
@@ -31,7 +39,7 @@ def hex_from_repeated_xor(key, message):
 
 def perform_repeated_xor(key, message):
     zipped_bytes = zip(itertools.cycle(key), message)
-    result = bytes([first_byte ^ second_byte for first_byte, second_byte in zipped_bytes])
+    result = bytes(first_byte ^ second_byte for first_byte, second_byte in zipped_bytes)
 
     return result
 
@@ -42,7 +50,7 @@ def score_message(message):
 
     words = message.lower().split(' ')
     word_list = get_word_list()
-    score = sum([1 if word in word_list else 0 for word in words])
+    score = sum(1 if word in word_list else 0 for word in words)
 
     return score
 
