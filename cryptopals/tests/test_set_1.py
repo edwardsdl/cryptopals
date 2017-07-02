@@ -7,6 +7,7 @@ import cryptopals.challenge_2 as challenge_2
 import cryptopals.challenge_3 as challenge_3
 import cryptopals.challenge_4 as challenge_4
 import cryptopals.challenge_5 as challenge_5
+import cryptopals.challenge_7 as challenge_7
 
 
 def test_challenge_1():
@@ -48,5 +49,14 @@ def test_challenge_5():
     expected_output = ('0b3637272a2b2e63622c2e69692a23693a2a3c6324202d623d63343c2a26226324272765272'
                        'a282b2f20430a652e2c652a3124333a653e2b2027630c692b20283165286326302e27282f')
     actual_output = challenge_5.xor_with_repeating_key('ICE', message)
+
+    assert expected_output == actual_output
+
+
+def test_challenge_7():
+    key = 'YELLOW SUBMARINE'
+    encrypted_message = pkg_resources.resource_string('cryptopals.resources', '7.txt')
+    expected_output = pkg_resources.resource_string('cryptopals.resources', '7_decrypted.txt')
+    actual_output = challenge_7.decrypt_using_aes_ecb(key, encrypted_message)
 
     assert expected_output == actual_output
