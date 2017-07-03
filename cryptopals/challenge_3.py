@@ -12,7 +12,7 @@ def decrypt_xor_encrypted_message(encrypted_message):
     highest_scoring_message = ''
     for character in characters:
         message = common.utf_from_repeated_xor(character, encrypted_message)
-        score = common.score_message(message)
+        score = common.score_message_using_word_list(message)
 
         if score > highest_score:
             highest_score = score

@@ -22,7 +22,11 @@ def test_compute_hamming_distance(first_bytes, second_bytes, expected_output):
     ('ETAOIN SHRDLU', 0)
 ])
 def test_score_message(message, expected_output):
-    assert common.score_message(message) == expected_output
+    assert common.score_message_using_word_list(message) == expected_output
+
+
+def test_score_message_using_frequency_analysis():
+    assert common.score_message_using_frequency_analysis('Defend the east wall of the castle') == 23.610265850026284
 
 
 def test_word_list_contains_1000_entries():
